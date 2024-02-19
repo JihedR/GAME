@@ -5,24 +5,24 @@
 #include "header.h"
 void initbackground(image*back)
 {
-back->img=IMG_Load("../image/background");
-	if back->img==NULL)
+back->img=IMG_Load("palestine.jpg");
+	if (back->img==NULL)
 		return ;
 back->pos1.x=0;
 back->pos1.y=0;
 back->pos2.x=0;
 back->pos2.y=0;
-back->pos2.w=(SCREEN_W);
-back->pos2.h=(SCREEN_H);
+back->pos2.w=(SCREEN->W);
+back->pos2.h=(SCREEN->H);
 }
-void initbutton(image*butt)
+void initbutton(image *butt, int *x1,*x2,*y1,*y2,*w,*h)
 {
-butt->pos1.x=0;//A MODIFIER
-butt->pos1.y=0;
-butt->pos2.x=0;
-butt->pos2.y=0;
-back->pos2.w=(SCREEN_W);
-back->pos2.h=(SCREEN_H);
+butt->pos1.x=x1;//A MODIFIER
+butt->pos1.y=y1;
+butt->pos2.x=x2;
+butt->pos2.y=y2;
+back->pos2.w=w;
+back->pos2.h=h;
 }
 void afficher(image i,SDL_Surface *ecran)
 {
@@ -46,7 +46,6 @@ void libererT(text t)
 }
 void affichertext(text t,SDL_Surface *ecran)
 {
-t.SurfaceT=TTF_RenderText_Blended(t.font,"AURORA BOREALIS",t.textC);
+t.SurfaceT=TTF_RenderText_Blended(t.font,t.texte,t.textC);
 SDL_BlitSurface(t.SurfaceT,NULL,ecran,&t.posT);
 }
-

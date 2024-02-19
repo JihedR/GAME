@@ -26,7 +26,7 @@ afficher(butt,screen);
 if(Mix_OpenAudio(44100,MIX_DEFAULT_FORMAT,MIX_DEFAULT_CHANNELS,1024)==-1)
 {printf("%s",Mix_GetError());}
 Mix_Music*music;
-music=Mix_LoadMus("music.mp3");
+music=Mix_LoadMus("palestine.mp3");
 Mix_PlayMusic(music,-1);
 
 //initialisation du texte 
@@ -62,9 +62,3 @@ TTF_Quit();
 return 0;
 
 }
-
-
-
-
-
-

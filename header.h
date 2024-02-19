@@ -1,14 +1,19 @@
+#include <SDL/SDL.h>
+#include <SDL/SDL_image.h>
+#include <SDL/SDL_ttf.h>
+#include <SDL/SDL_mixer.h>
+
 typedef struct {
-SDL_rect pos1;
-SOL_rect pos2;
-SDL_Surface*img;
+SDL_Rect pos1;
+SDL_Rect pos2;
+SDL_Surface *img;
 }image;
 typedef struct{
 SDL_Rect posT;
-TTF_Font*font;
+TTF_Font *font;
 SDL_Surface *surfaceT;
 SDL_Color textC;
-char texte[20];
+char texte[40];
 }text;
 
 void initbackground(image*back);
