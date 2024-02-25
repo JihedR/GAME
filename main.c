@@ -3,62 +3,69 @@
 #include <SDL/SDL_ttf.h>
 #include <SDL/SDL_mixer.h>
 #include "header.h"
-int main(int argc,char**argv){
 
-image back;
-image butt_play,butt_load,butt_set,butt_quit;
-image butt_play2,butt_load2,butt_set2,butt_quit2;
-SDL_Event event;
-//creation d'une fenetre
-screen=SDL-SetVideoMode(SCREEN_W,Screen_H,32,SDL_HWSURFACE| SDL_SRCALPHA);
-if(screen){
-	printf("Unable to set 680*380 video:%s\n",SD-GetError());
+int main(int argc,char**argv){
+//init tout
+SDL_Init(SDL_INIT_EVERYTHING);
+
+//declaration des variables
+image background,play,cont,settings,quit,emblem,eye1,eye2,eye3,eye4;
+
+SDL_Event ev;
+
+//creation fenetre
+SDL_Surface *screen = SDL_SetVideoMode(1027,599,32,SDL_SWSURFACE);
+if (!screen){
+	printf("Unable to set video\n");
 	return 1;
 }
 
-//initialisation des variables
-initBackground(&back);
+//Init des variables
+printf("initalizing...");
+initimage(&background,0,0,0,0,1027,599,"BACKGROUND1.png");
+initimage(&play,83,270,0,0,83,53,"PLAY.png");
+initimage(&cont,51,346,0,0,159,53,"CONTINUE.png");
+initimage(&settings,55,435,0,0,139,53,"SETTINGS.png");
+initimage(&quit,81,519,0,0,86,53,"QUIT.png");
+initimage(&emblem,904,8,0,0,115,100,"emblem.png");
+initimage(&eye1,533,505,0,0,210,70,"EYES1.png");
+initimage(&eye2,533,505,0,0,210,70,"EYES2.png");
+initimage(&eye3,533,505,0,0,210,70,"EYES3.png");
+initimage(&eye4,533,505,0,0,210,70,"EYES4.png");
 
-//Display
-afficher(back,screen);
-afficher(butt,screen);
-//telechargement du son 
-if(Mix_OpenAudio(44100,MIX_DEFAULT_FORMAT,MIX_DEFAULT_CHANNELS,1024)==-1)
-{printf("%s",Mix_GetError());}
-Mix_Music*music;
-music=Mix_LoadMus("palestine.mp3");
-Mix_PlayMusic(music,-1);
-
-//initialisation du texte 
-TTF_Init();
-text t;
-initText(&t);
-affichertext(t,screen);
-SDL_Flip(screen);
-
-//telechargement d'un son bref
-Mix_Chunk*son;
-son=Mix_LoadWAV("effet.wav");//A MODIFIER xD
-Mix_PlayChannel(-1,son,0);
+int etat_play=0;
+int etat_continue=0;
+int etat_settings=0;
+int etat_quit=0;
 
 
 
-//initialisation d'un evennement
-if(event.type==SDL_MOUSEMOTION)
-
-
-
-
-
-
-liberer(back);
-liberer(butt);
-Mix_FreeMusic(music);
-libereT(t);
-Mix_FreeChunk(son);
-TTF_CloseFont(t.font);
-TTF_Quit();
-
+//Game loop
+int run=1;
+while(run){
+	//Display
+	afficher(background,screen);
+	afficher(play,screen);
+	afficher(cont,screen);
+	afficher(settings,screen);
+	afficher(quit,screen);
+	afficher(emblem,screen);
+	SDL_Flip(screen);
+	while (SDL_PollEvent(&ev)){
+		switch(ev.type){
+			case SDL_QUIT:
+				run=0;
+				break;
+			case SDL_MOUSEMOTION:
+				etat_play=collision(play);
+				etat_continue=collision(cont);
+				etat_settings=collision(settings);
+				etat_quit=collision(quit);
+				break;
+				
+		}
+	}
+}
+SDL_Quit();
 return 0;
-
 }

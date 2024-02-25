@@ -3,49 +3,40 @@
 #include <SDL/SDL_ttf.h>
 #include <SDL/SDL_mixer.h>
 #include "header.h"
-void initbackground(image*back)
+
+void initimage(image *a, int x, int y, int w1, int h1, int w2, int h2, char path[150])
 {
-back->img=IMG_Load("palestine.jpg");
-	if (back->img==NULL)
-		return ;
-back->pos1.x=0;
-back->pos1.y=0;
-back->pos2.x=0;
-back->pos2.y=0;
-back->pos2.w=(SCREEN->W);
-back->pos2.h=(SCREEN->H);
+printf("LOadING...%s",path);
+a->img=IMG_Load(path);
+if(a->img==NULL){printf("Failed to load image");return ;}
+a->pos1.x=x;
+a->pos1.y=y;
+a->pos1.h=h1;
+a->pos1.w=w1;
+a->pos2.x=0;
+a->pos2.y=0;
+a->pos2.h=h2;
+a->pos2.w=w2;
+printf("Loaded");
 }
-void initbutton(image *butt, int *x1,*x2,*y1,*y2,*w,*h)
-{
-butt->pos1.x=x1;//A MODIFIER
-butt->pos1.y=y1;
-butt->pos2.x=x2;
-butt->pos2.y=y2;
-back->pos2.w=w;
-back->pos2.h=h;
+
+
+
+void afficher(image p,SDL_Surface *screen){
+SDL_BlitSurface(p.img,&p.pos2,screen,&p.pos1);
 }
-void afficher(image i,SDL_Surface *ecran)
-{
-SDL_BlitSurface(i.img,&i.pos2,ecran,&i.pos1);
+
+void liberer(image p){
+SDL_FreeSurface(p.img);
 }
-void liberer(image i)
-{
-SDL_FreeSurface(i.img);
+
+int collision(image p){
+int mousex;
+int mousey;
+SDL_GetMouseState(&mousex,&mousey);
+if(mousex>p.pos1.x && mousex<p.pos1.x+p.pos1.w && mousey>p.pos1.y && mousey<p.pos1.y+p.pos1.h){
+	return 1;
+else 
+	return 0;
 }
-void initText(text *t)
-{
-(*t).posT.x=0;
-(*t).posT.y=0;
-(*t).textC.r=255;
-(*t).textC.g=255;
-(*t).textC.b=255;
-(*t).font=TTF_OpenFont("......ttf",70);//parametre a MODIFIER
-}
-void libererT(text t)
-{SDL_FreeSurface((*t).SurfaceT);
-}
-void affichertext(text t,SDL_Surface *ecran)
-{
-t.SurfaceT=TTF_RenderText_Blended(t.font,t.texte,t.textC);
-SDL_BlitSurface(t.SurfaceT,NULL,ecran,&t.posT);
 }
